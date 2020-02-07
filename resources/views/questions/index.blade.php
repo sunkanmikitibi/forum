@@ -5,9 +5,16 @@
         <div class="col-10 offset-1">
             <div class="card">
                 <div class="card-header">
-                    All Questions
+                    <div class="d-flex align-items-center">
+                        <h2>All Questions</h2>
+                        <div class="ml-auto">
+                        <a href="{{ route('questions.create')}}" class="btn btn-outline-secondary">Add Question</a>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="card-body">
+                    @include('layouts._messages')
                     @foreach ($questions as $question)
                     <div class="media">
                         <div class="d-flex flex-column counters">
@@ -27,8 +34,27 @@
                             </div>
                         </div>
                         <div class="media-body">
-                        <h3 class="mt-0">
+                            <div class="d-flex align-items-center">
+                                 <h3 class="mt-0">
                         <a href="{{$question->url}}">{{ $question->title }}</a></h3>
+                        <div class="ml-auto">
+                            @can('update', $question)
+                              <a href="{{ route('questions.edit', $question->id)}}" class="btn btn-sm btn-outline-info">
+                                edit
+                                </a>
+                            @endcan
+                        @can('delete', $question)
+                            <form class="form-delete" action="{{ route('questions.destroy', $question->id)}}" method="POST">
+                                                {{method_field('DELETE')}}
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are You Sure?')">
+                                                Delete</button>
+                                            </form>
+                        @endcan
+
+                        </div>
+                            </div>
+
                         <p class="lead">
                             Asked by:
                         <a href="{{$question->user->url}}">{{$question->user->name}}</a>
