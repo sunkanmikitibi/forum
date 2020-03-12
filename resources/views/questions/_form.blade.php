@@ -1,7 +1,8 @@
 @csrf
 <div class="form-group">
     <label for="question_title">Question Title</label>
-    <input type="text" value="{{ old('title', $question->title) }}" name="title" id="question-title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
+    <input type="text" value="{{ old('title', $question->title) }}" name="title" id="question-title"
+    class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
     @if ($errors->has('title'))
         <div class="invalid-feedback">
         <strong>{{ $errors->first('title')}}</strong>
